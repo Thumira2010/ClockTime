@@ -1,22 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Orbitron:wght@400..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
-
 :root {
-  --bg-color-light: #ffffff;
-  --text-color-light: #111111;
+  --bg-morning: linear-gradient(to right, #f9f9a3, #a1c4fd);
+  --text-morning: #222;
 
-  --bg-color-dark: #111111;
-  --text-color-dark: #ffffff;
+  --bg-night: linear-gradient(to right, #1e1e40, #0d0d1f);
+  --text-night: #fff;
 
   --accent-color: #00c3ff;
-    --accent-color: #00c3ff;
-
-  --morning-bg: linear-gradient(120deg, #c2e9fb, #a1c4fd);
-  --noon-bg: linear-gradient(120deg, #fddb92, #d1fdff);
-  --evening-bg: linear-gradient(120deg, #ffecd2, #fcb69f);
-  --night-bg: #0d0d1f;
-
-  --text-morning: #111111;
-  --text-night: #ffffff;
 }
 
 body {
@@ -30,12 +20,18 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  transition: background-color 0.4s ease, color 0.4s ease;
+  font-family: 'Orbitron', sans-serif;
+  transition: background 0.6s ease, color 0.6s ease;
 }
 
-body.dark {
-  background-color: var(--bg-color-dark);
-  color: var(--text-color-dark);
+body.morning {
+  background: var(--bg-morning);
+  color: var(--text-morning);
+}
+
+body.night {
+  background: var(--bg-night);
+  color: var(--text-night);
 }
 
 #time-container {
@@ -48,9 +44,7 @@ body.dark {
 #time {
   font-family: 'Roboto Mono', monospace;
   font-size: 6rem;
-  font-weight: bold;
-  letter-spacing: 2px;
-  transition: all 0.3s ease-in-out;
+
 }
 
 #ampm {
@@ -58,83 +52,50 @@ body.dark {
 }
 
 #date {
-  font-family: "Montserrat", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 300px;
-  font-style: normal;
-  font-size: 1.6rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+  transition: all 0.3s ease-in-out;
+}
 
+.buttons {
+  margin-top: 20px;
+}
+#toggleFormat{
+  padding: 15px;
 }
 
 button {
   padding: 12px 20px;
-  margin-left: 5px;
-  margin-top: 20px;
+  margin: 0 10px;
   font-size: 1rem;
   border: none;
   border-radius: 6px;
   background-color: var(--accent-color);
-  color: #fff;
+  color: #009fdd;
+  background-color: #fff;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
 }
 
 button:hover {
-  background-color: #009fdd;
+  background-color: #fff;
+  transform: scale(1.05);
 }
 
-body.dark button {
-  background-color: #00c3ff;
-  color: #000;
+#icon {
+  transition: transform 0.4s ease;
+  display: inline-block;
+  font-size: 1.2rem;
 }
 
-body.dark button:hover {
-  background-color: #00a7dc;
-}
-body.morning {
-  background: linear-gradient(135deg, #e0f7fa, #ffffff);
-  color: #222;
+#icon.rotate {
+  transform: rotate(360deg);
 }
 
-body.morning button {
-  background-color: #00bcd4;
-  color: #fff;
-}
-
-body.morning button:hover {
-  background-color: #0097a7;
-}
-body.noon {
-  background: linear-gradient(135deg, #e0f7fa, #ffffff);
-  color: #222;
-}
-
-body.noon button {
-  background-color: #00bcd4;
-  color: #fff;
-}
-
-body.noon button:hover {
-  background-color: #0097a7;
-}
-
-body.night {
-  background: #0d0d1f;
-  color: #fff;
-  overflow: hidden;
-}
-.star {
-  position: absolute;
-  width: 2px;
-  height: 2px;
-  background: white;
-  border-radius: 50%;
-  animation: twinkle 2s infinite ease-in-out alternate;
-}
-@keyframes twinkle {
-  from { opacity: 0.2; transform: scale(0.8); }
-  to   { opacity: 1; transform: scale(1.2); }
-}
 
 @media (max-width: 600px) {
   #time {
