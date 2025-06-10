@@ -3,9 +3,9 @@ const ampmEl = document.getElementById('ampm');
 const dateEl = document.getElementById('date');
 const toggleFormatBtn = document.getElementById('toggleFormat');
 const themeToggleBtn = document.getElementById('themeToggle');
+const icon = document.getElementById('icon');
 
 let is24Hour = false;
-
 
 function pad(value) {
   return value.toString().padStart(2, '0');
@@ -36,66 +36,45 @@ function updateClock() {
   });
 }
 
-
-
-function generateStars(count = 100) {
-  for (let i = 0; i < count; i++) {
-    const star = document.createElement('div');
-    star.className = 'star';
-    star.style.top = `${Math.random() * 100}vh`;
-    star.style.left = `${Math.random() * 100}vw`;
-    star.style.animationDelay = `${Math.random() * 2}s`;
-    star.style.opacity = Math.random();
-    document.body.appendChild(star);
-  }
+function clearThemes() {
+  document.body.classList.remove('morning', 'night');
 }
-
 
 function setTimeBasedTheme() {
   const hour = new Date().getHours();
   clearThemes();
 
-  if (hour >= 6 && hour < 12) {
+  if (hour >= 6 && hour < 18) {
     document.body.classList.add('morning');
-  } else if (hour >= 12 && hour < 18) {
-    document.body.classList.add('noon');
+    icon.textContent = '🌙';
   } else {
     document.body.classList.add('night');
-    generateStars();
+    icon.textContent = '☀️';
   }
 }
 
+function toggleThemeManually() {
+  icon.classList.add('rotate');
 
-function toggleManualTheme() {
-  const current = document.body.classList.contains('night') ? 'night' : 'morning';
-  clearThemes();
-
-  if (current === 'night') {
-    document.body.classList.add('morning');
-    localStorage.setItem('theme', 'morning');
-  } else {
-    document.body.classList.add('night');
-    generateStars();
-    localStorage.setItem('theme', 'night');
-  }
-}
-function clearThemes() {
-  document.body.classList.remove('morning', 'noon', 'night', 'dark');
-  document.querySelectorAll('.star').forEach(star => star.remove());
-}
-
-function restoreTheme() {
-  const saved = localStorage.getItem('theme');
-  if (saved === 'morning') {
+  if (document.body.classList.contains('night')) {
     clearThemes();
     document.body.classList.add('morning');
-  } else if (saved === 'night') {
+    icon.textContent = '🌙';
+    document.getElementById("themeToggle").style.backgroundColor = "#fff";
+    document.getElementById("themeToggle").style.color = "#009fdd";
+    document.getElementById("toggleFormat").style.backgroundColor = "#fff";
+    document.getElementById("toggleFormat").style.color = "#009fdd";
+  } else {
     clearThemes();
     document.body.classList.add('night');
-    generateStars();
-  } else {
-    setTimeBasedTheme();
+    document.getElementById("themeToggle").style.backgroundColor = "#1e1e40";
+    document.getElementById("themeToggle").style.color = "#fff";
+    document.getElementById("toggleFormat").style.backgroundColor = "#1e1e40";
+    document.getElementById("toggleFormat").style.color = "#fff";
+    icon.textContent = '☀️';
   }
+
+  setTimeout(() => icon.classList.remove('rotate'), 500);
 }
 
 toggleFormatBtn.addEventListener('click', () => {
@@ -104,11 +83,10 @@ toggleFormatBtn.addEventListener('click', () => {
   updateClock();
 });
 
-themeToggleBtn.addEventListener('click', toggleManualTheme);
+themeToggleBtn.addEventListener('click', toggleThemeManually);
 
 window.addEventListener('DOMContentLoaded', () => {
-  restoreTheme();
+  setTimeBasedTheme();
   updateClock();
   setInterval(updateClock, 1000);
-  localStorage.removeItem('theme'); // ✨ force time-based theme every time
 });
