@@ -25,8 +25,25 @@ body {
 }
 
 body.morning {
-  background: var(--bg-morning);
-  color: var(--text-morning);
+  background: linear-gradient(135deg, #fdfcfb, #e2d1c3); 
+  color: #2c3e50;
+  transition: background 0.6s ease, color 0.6s ease;
+}
+
+
+
+body.morning #date {
+  color: #34495e;
+}
+
+body.morning button {
+  background-color: #ffb347;
+  color: #fff;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+body.morning button:hover {
+  background-color: #ff9e2c;
 }
 
 body.night {
@@ -96,6 +113,53 @@ button:hover {
   transform: rotate(360deg);
 }
 
+#stars {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.8;
+  animation: twinkle 2s infinite ease-in-out;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 0.2; }
+}
+
+body.morning #stars {
+  display: none;
+}
+
+body.night #stars {
+  display: block;
+}
+
+body.night {
+  background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+  color: var(--text-night);
+}
+body.night button {
+  background-color: #1e1e40;
+  color: #fff;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+body.night button:hover {
+  background-color: #272753;
+}
+
+
 
 @media (max-width: 600px) {
   #time {
@@ -123,6 +187,8 @@ button:hover {
   .buttons button {
     margin-left: 0;
     margin-top: 0;
-    width: 100%
+    width: 100%;
+    align-items:center;
+    justify-content: center;
   }
 }

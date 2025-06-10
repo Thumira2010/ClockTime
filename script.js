@@ -39,6 +39,20 @@ function updateClock() {
 function clearThemes() {
   document.body.classList.remove('morning', 'night');
 }
+function generateStars() {
+  const starsContainer = document.getElementById('stars');
+  starsContainer.innerHTML = ''; // clear previous stars
+
+  const count = 100;
+  for (let i = 0; i < count; i++) {
+    const star = document.createElement('div');
+    star.classList.add('star');
+    star.style.top = `${Math.random() * 100}%`;
+    star.style.left = `${Math.random() * 100}%`;
+    star.style.animationDuration = `${1 + Math.random() * 2}s`;
+    starsContainer.appendChild(star);
+  }
+}
 
 function setTimeBasedTheme() {
   const hour = new Date().getHours();
@@ -51,6 +65,7 @@ function setTimeBasedTheme() {
     document.body.classList.add('night');
     icon.textContent = '☀️';
   }
+  generateStars();
 }
 
 function toggleThemeManually() {
@@ -60,26 +75,28 @@ function toggleThemeManually() {
     clearThemes();
     document.body.classList.add('morning');
     icon.textContent = '🌙';
-    document.getElementById("themeToggle").style.backgroundColor = "#fff";
-    document.getElementById("themeToggle").style.color = "#009fdd";
-    document.getElementById("toggleFormat").style.backgroundColor = "#fff";
-    document.getElementById("toggleFormat").style.color = "#009fdd";
+    document.getElementById("themeToggle").style.backgroundColor = "#ff9e2c";
+    document.getElementById("themeToggle").style.color = "#fff";
+    document.getElementById("toggleFormat").style.backgroundColor = "#ff9e2c";
+    document.getElementById("toggleFormat").style.color = "#fff";
   } else {
     clearThemes();
     document.body.classList.add('night');
     document.getElementById("themeToggle").style.backgroundColor = "#1e1e40";
     document.getElementById("themeToggle").style.color = "#fff";
     document.getElementById("toggleFormat").style.backgroundColor = "#1e1e40";
+    document.getElementById("toggleFormat").style.backgroundColor = "#1e1e40";
     document.getElementById("toggleFormat").style.color = "#fff";
     icon.textContent = '☀️';
   }
 
   setTimeout(() => icon.classList.remove('rotate'), 500);
+  generateStars();
 }
 
 toggleFormatBtn.addEventListener('click', () => {
   is24Hour = !is24Hour;
-  toggleFormatBtn.textContent = is24Hour ? 'Switch to 12 Hour Clock' : 'Switch to 24 Hour Clock';
+  toggleFormatBtn.textContent = is24Hour ? '12 Hour Clock' : '24 Hour Clock';
   updateClock();
 });
 
